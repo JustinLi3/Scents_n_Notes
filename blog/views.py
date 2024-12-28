@@ -1,11 +1,14 @@
 from django.shortcuts import render  
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #Class based views (list view)
 from django.views.generic import (
     ListView, 
     DetailView, 
-    CreateView
+    CreateView, 
+    UpdateView, 
+    DeleteView
 )
-from .models import Post 
+from .models import Post  
 
 
 #Use as dummy data, as if you retrieved this data from a database
@@ -52,7 +55,8 @@ class PostDetailView(DetailView):
     model = Post
 
 #Create a new post with the fields being a title and content, with date being automatically filled 
-class PostCreateView(CreateView): 
+#V here we put in the login mixin, ensuring that the user is logged in prior to creating posts 
+class PostCreateView(LoginRequiredMixin, CreateView): 
     model = Post
     fields = ['title', 'content'] 
 
@@ -62,8 +66,35 @@ class PostCreateView(CreateView):
         form.instance.author  = self.request.user 
         #Setting the author to the logged-in user before we save this form to the database as usual.
         return super().form_valid(form)
-        #HOWEVER, we still need a redirect url, post-submit, let view know where to redirect
+        #HOWEVER, we still need a redirect url, post-submit, let view know where to redirect 
         #Must create a get absolute URL method in our model returning path   
+
+        #NOTE, since only logged in users can create posts, we need to use a login mixin (Decorators only for function-based views)
+
+#UserPassesTestMixin allows us to define a function that runs before view is executed, return true if user is allowed to access view, otherwise not 
+#Adds restrictions to views 
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): 
+    model = Post 
+    fields = ['title', 'content'] 
+    def form_valid(self, form): 
+            form.instance.author = self.request.user 
+            return super().form_valid(form)
+    
+    def test_func(self):
+         post = self.get_object()
+         if self.request.user == post.author:
+              return True
+         return False 
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): 
+    model = Post  
+    #setting success url for deletion, back to homepage
+    success_url = '/'
+    def test_func(self):
+         post = self.get_object()
+         if self.request.user == post.author:
+              return True
+         return False 
 
 #blog -> templates -> blog -> template.html  
 

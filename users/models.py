@@ -11,10 +11,10 @@ class Profile(models.Model):
         return f'{self.user.username} Profile' 
         #changes take effect after reopening  
 
-    #grab image saved and then resize using pillow
-    def save(self): 
-        super().save() 
-
+    #grab image saved and then resize using pillow 
+    #*args and **kwargs allow Django to send whatever it needs, and super().save(*args, **kwargs) makes sure the object is saved before your custom code runs
+    def save(self, *args, **kwargs): 
+        super(Profile, self).save( *args, **kwargs) 
         #Open the image of the current instance and resize 
         img = Image.open(self.image.path) 
 
