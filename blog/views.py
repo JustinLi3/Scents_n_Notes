@@ -62,6 +62,8 @@ class PostCreateView(CreateView):
         form.instance.author  = self.request.user 
         #Setting the author to the logged-in user before we save this form to the database as usual.
         return super().form_valid(form)
+        #HOWEVER, we still need a redirect url, post-submit, let view know where to redirect
+        #Must create a get absolute URL method in our model returning path   
 
 #blog -> templates -> blog -> template.html  
 

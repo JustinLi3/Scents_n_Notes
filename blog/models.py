@@ -1,6 +1,7 @@
 from django.db import models  
 from django.contrib.auth.models import User #import user model
-from django.utils import timezone 
+from django.utils import timezone  
+from django.urls import reverse
 # Think about models for blogs (Users: authors of posts, posts)
 # Create your models here. 
 # Since the relationship between posts and users is that one user can have multiple posts, this is a one to many relationship 
@@ -17,7 +18,11 @@ class Post(models.Model):  #Each class would be its own table in database
          #use on model with many instances related to one instance of another model   
     def __str__(self): 
         return self.title 
-        #changes take effect after reopening 
+        #changes take effect after reopening
+
+    def get_absolute_url(self):
+        return reverse("post-detail", kwargs={"pk": self.pk})
+    #Redirect/Reverse: Redirect would redirect you to a specific route while Reverse returns the full URL to that route as a string  
 
 #Rerun migrations after making changes  
   #Run python manage.py makemigrations: Django generates migration files based on the changes you made.
