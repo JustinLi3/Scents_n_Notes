@@ -1,0 +1,13 @@
+Routing in urls.py: When a user visits a URL (like /register), Django looks at the urls.py file to find a matching route. 
+If a match is found, it directs the request to the associated view function (in this case, register).
+
+Request Object: Django sends a request object to the view function. This object contains metadata about the HTTP request, 
+including the request method (e.g., GET or POST) and any data sent by the user (like form data).
+
+Handling POST and GET Requests in the View:
+
+If the request method is POST (meaning the user submitted the form), the code handles it by creating a form instance with the data 
+the user submitted (request.POST). This populates the form with the submitted data, which can then be processed (e.g., saved to the database if valid).
+If the request is not POST (likely a GET request, when the user first accesses the page), it simply creates an empty form instance, allowing the user to see the form.
+Rendering the Form: Finally, the view renders an HTML template (register.html) and passes the form instance to it. The user then sees either an empty form (if it’s a 
+GET request) or the form with any data that was previously submitted (if it’s a POST request and the form isn’t valid yet).

@@ -1,0 +1,5 @@
+Every HTTP request method: 
+    GET: Essential for retrieving data from the server such as loading web pages or fetching data in an application  (server to client)
+    POST: Especially in forms/APIS, where data is submitted to the server (client to server)
+    PUT/PATCH: Important for updating existing data (PUT for full replacement, PATCH for adjusting some)
+    DELETE: Important for data deletion 

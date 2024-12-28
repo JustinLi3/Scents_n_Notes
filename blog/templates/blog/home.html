@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+{% comment %} Use this to plug into the block content (unique) {% endcomment %}  
+{% comment %} Inherit from base  {% endcomment %}
+{% block content%}
+    {% for post in posts%}   
+        <article class="media content-section">
+            {% comment %} Current post, author of current post, the profile of current author, image of profile and url  {% endcomment %}
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ post.author }}</a>  
+                    {% comment %} Filter through piping through format: Month, day, year {% endcomment %}
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> 
+                </div> 
+                {% comment %} Adding links to these individual posts {% endcomment %}
+                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+    {% endfor %}  
+{% endblock content %}

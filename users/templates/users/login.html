@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %} 
+{% load crispy_forms_tags %}
+{% block content%}
+   <div class="content-section">
+        <form method="POST"> 
+            {% comment %} CSRF is a security feature for forms {% endcomment %}
+            {% csrf_token %} 
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In </legend> 
+                {{ form |crispy}}   
+                {% comment %} reformat as paragraph tags {% endcomment %} 
+                {% comment %} To add a new field, we need to create a new form that inherits form forms.py {% endcomment %}
+            </fieldset> 
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Login</button>
+            </div>
+        </form> 
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need an Account?
+                <a class="ml-2" href="{% url 'register' %}">Sign In</a>
+            </small>
+        </div>
+   </div>
+{% endblock content %}

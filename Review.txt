@@ -1,0 +1,100 @@
+App (unit of functionality)
+ -Blog: backend module designed to handle everything related to "blog" functionality
+ -First set up views for request handling 
+ -Second set up app url mapping 
+ -Third set up project mapping to that url  
+
+Routing: when we navigate to the specific url path
+ -First looks in our projects urls.py module
+ -Second it says okay, do I have a pattern that matches that 
+ -Third, where do I want to send people who go to that route? (include() statement)
+ -Fourth, if matches, chop off the url that has matched up to that point and sends the remaining to the included 
+ -Fifth, do I have a pattern that matches within apps url.pys
+
+NOTE: you can leave path as '' to make it homepage 
+
+Template: nstead of returning an entire html line for each view return for HTMPResponse
+ -Often specific to an app 
+ -Create new templates/app project name 
+ -Create html files 
+ -Now we need to add application to our list of installed app so that django knows to look there for a templates directory (we have only done mapping views) 
+ -Go to apps.py in app copy ___Config, add it to settings.py within installed apps: 'blog.apps.BlogConfig'
+ -Now we need to hook up the template to the views using render 
+ -Make sure when you apply the render function to consider using the third prarmeter to pass in information 
+ -When creating templates, if there is a lot of repetetitveness, try to chunk it down (template inheritance: create base template) 
+ -With templates, you limit the amount of code you need to write as well as importing libraries such as bootstrap into every single template 
+
+RECAP 
+ -Create base template where other templates could inherit from  
+ -You could have multiple blocks 
+ -If you want to add static files (css/javascript), create a new folder within the app called static -> app name -> files 
+
+Admin page 
+ -Nice way to see data on site  
+ -Nice gui for creating/updating/deleting data 
+ -python manage.py createsuperuser 
+ -However we do not have a database yet to connect 
+ -Thus we need to create a database migration (apply changes to a database) 
+ -python manage.py makemigrations 
+    -Detect Changes in Your Models: It checks if you've added, modified, or removed any fields or models
+    -Prepare Instructions for Updating the Database: It creates a file (called a migration) that records the changes needed to update your database 
+ -python manage.py migrate 
+    -Ran through migrations to create auth table
+ -python manage.py createsuperuser  
+ -BASICALLY 
+   -makemigrations → prepares changes for the database
+   -migrate → applies those changes, creating tables
+   -createsuperuser → creates an admin user so you can log in to the admin page 
+ -When you first create a Django project and define your models (the data structures that represent your data), even if you haven’t added any data yet, Django needs to set up the initial structure of the database. This includes:
+Default Tables: Django automatically creates tables for built-in apps, such as the authentication system. These tables are necessary for managing users and permissions, which are critical for the admin interface.
+Your Models: If you have defined any models in your Django app (even if they don't have any data yet), running makemigrations will prepare migration files that tell Django what tables need to be created in the database.
+ -go to /admin 
+
+Databases & Migrations 
+ -With Django's ORM, you could access database and use different databases without having to change code  
+   -SQLite database for development 
+   -Postgres database for production  
+ -Represent database structure as classes (models.py)  
+ -Migrations are extremely helpful with making changes to our database even after it is created to avoid complicated SQL code  
+
+Query data  
+ -python manage.py shell 
+ -from blog.models import Post 
+ -from django.contrib.auth.models import User  
+
+Queries 
+ -User.objects.all() .objects.first() .objects.filter(username = 'lijus') 
+ -user = .objects.filter(username = 'lijus').first(), .object.get(id=1)
+ -user.id .pk   
+ -Put specific instance of Post: post_1 = Post(title = ' ', content = '  ', author = '   '), post_1.save(), check with Post.objects.all() 
+ -If we want the print query to be more descriptive, tell it what to see in the models.py, reopen shell 
+
+ -Looking directly into a post 
+ -post = Post.objects.first() 
+ -post.content / .author (.email/ ) / etc 
+ -Lets say we are trying to get all posts written by a specific user: user._modelname_set.all()  user.post_set.all() 
+ -If you wanted to create another post under the dsame user : user.post_set.create(title='My Cologne Choice PT 3',content='Leau Dissey Issey Miyake') 
+
+Admin Page 
+ -to see the model (like posts) in Django, you need to register it within the admin page 
+ -go to admin.py 
+ -After this, you could directly adjust the posts 
+
+Creating App 
+ -python manage.py startapp _appname_ 
+ -Set up views.py, urls.py, templates, and map to main urls.py 
+ -Also add to installed apps
+
+7 
+ -Users can create accounts, however they could not login yet with those accounts 
+ -Admin page is only for admin users
+ -Need to make login page for users  
+ -go to main projects urls
+
+
+Signals to avoid having to manually input profile for each user, automate it with signals
+
+9 
+ -Forms to update user and profile 
+ -Create model form, that would help update the user model 
+ -go to Forms.py
