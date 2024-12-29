@@ -2,6 +2,8 @@
 {% comment %} Use this to plug into the block content (unique) {% endcomment %}  
 {% comment %} Inherit from base  {% endcomment %}
 {% block content%}
+{% comment %} retrieve username of clicked on post author {% endcomment %}
+    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
     {% for post in posts%}   
         <article class="media content-section">
             {% comment %} Current post, author of current post, the profile of current author, image of profile and url  {% endcomment %}

@@ -1,5 +1,6 @@
-from django.shortcuts import render  
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
+from django.contrib.auth.models import User 
 #Class based views (list view)
 from django.views.generic import (
     ListView, 
@@ -52,8 +53,21 @@ class PostListView(ListView):
     paginate_by = 5 #posts per page 
     #now we need to add a link to other pages  (manually: /?page=_), this is done within home.html
 
+
+class UserPostListView(ListView):  
+    #Tell our model what to query 
+    model = Post 
+    template_name = 'blog/user_posts.html' #rerouting our template from list to home  
+    #Route convention: <app>/<model>_<viewtype>.html    blog/post_detail.html <-TEMPLATE
+    context_object_name = 'posts' #We need this variable name template for easy reference {{posts}} instead of {{object_list}}  
+    paginate_by = 5 #posts per page  
+    def get_queryset(self):
+        user = get_object_or_404(User,username=self.kwargs.get('username'))
+        return Post.objects.filter(author = user).order_by('-date_posted')
+         
+
 #Detail view for each post in PostListView 
-class PostDetailView(DetailView):
+class PostDetailView(DetailView): 
     model = Post
 
 #Create a new post with the fields being a title and content, with date being automatically filled 

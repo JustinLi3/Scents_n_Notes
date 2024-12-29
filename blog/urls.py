@@ -1,5 +1,5 @@
 from django.urls import path   
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView
 from . import views 
 
 urlpatterns = [
@@ -11,7 +11,8 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     #To update a post, we need to include the primary key to know what post we are updating 
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'), 
-    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'), 
+    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  
+    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
 
     #Set as the homepage
     #Specify the view that we want to handle logic at that home page route   
