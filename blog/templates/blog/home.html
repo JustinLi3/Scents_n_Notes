@@ -19,12 +19,31 @@
         </article>
     {% endfor %}    
     {% comment %} Check if the list of items has been divided into multiple pages {% endcomment %}
-    {% if is_paginated %} 
-        <div class="my-5 ml-3 "> 
+    {% if is_paginated %}  
+        {%if page_obj.has_previous %} 
+            <a class = "btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class = "btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {%endif%} 
+        {% comment %} navigate to pages nearby {% endcomment %} 
+        {%for num in page_obj.paginator.page_range %}
+        {% comment %} If it is the current page we want to make it look unique {% endcomment %}
+            {%if page_obj.number ==  num%}  
+                <a class = "btn btn-info mb-4" href="?page={{num}}">{{num}}</a>  
+            {% comment %} Is the current number within the three previous/next pages {% endcomment %}
+            {%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+                <a class = "btn btn-outline-info mb-4" href="?page={{num}}">{{num}}</a>  
+            {%endif%}
+        {%endfor%} 
+        {% if page_obj.has_next %} 
+            <a class = "btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>  
+            <a class = "btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">Last</a>  
+
+        {% endif %}
+        {% comment %} <div class="my-5 ml-3 ">  Simple list of pages
             Pages
             {% for page_num in paginator.page_range %}  
                 <a class="btn btn-outline-dark color-black ml-2 px-3 py-2" href="/?page={{page_num}}"><strong>{{page_num}}</strong></a>
             {% endfor %} 
-        </div>
+        </div> {% endcomment %}
     {% endif %}
 {% endblock content %}

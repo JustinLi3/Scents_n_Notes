@@ -109,3 +109,13 @@ Pagination
     Within shell again..
      -use pagination_script.py
   go to views in blog to finish pagination
+  - Django's paginator attributes (page_obj.)
+    number: current page num 
+    has_previous/has_next
+    previous_page_number/next_page_number 
+    start_index/end_index
+    paginator: global pagination info
+      count 
+      num_pages 
+      page_range
+    
