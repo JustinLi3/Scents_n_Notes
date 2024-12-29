@@ -17,5 +17,14 @@
                 <p class="article-content">{{ post.content }}</p>
             </div>
         </article>
-    {% endfor %}  
+    {% endfor %}    
+    {% comment %} Check if the list of items has been divided into multiple pages {% endcomment %}
+    {% if is_paginated %} 
+        <div class="my-5 ml-3 "> 
+            Pages
+            {% for page_num in paginator.page_range %}  
+                <a class="btn btn-outline-dark color-black ml-2 px-3 py-2" href="/?page={{page_num}}"><strong>{{page_num}}</strong></a>
+            {% endfor %} 
+        </div>
+    {% endif %}
 {% endblock content %}

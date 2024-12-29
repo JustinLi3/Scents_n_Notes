@@ -49,6 +49,8 @@ class PostListView(ListView):
     #Route convention: <app>/<model>_<viewtype>.html    blog/post_detail.html <-TEMPLATE
     context_object_name = 'posts' #We need this variable name template for easy reference {{posts}} instead of {{object_list}} 
     ordering = ['-date_posted'] #We are essentially ordering our blogs such that (with -) the most recent are at the top 
+    paginate_by = 5 #posts per page 
+    #now we need to add a link to other pages  (manually: /?page=_), this is done within home.html
 
 #Detail view for each post in PostListView 
 class PostDetailView(DetailView):

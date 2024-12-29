@@ -98,3 +98,14 @@ Signals to avoid having to manually input profile for each user, automate it wit
  -Forms to update user and profile 
  -Create model form, that would help update the user model 
  -go to Forms.py
+
+
+Pagination 
+ - Go to shell 
+ - populate posts if needed with populate_posts.py 
+  - exec(open('populate_posts.py').read()) 
+  -If posts had images, it would really slow down our webpage, thus pagination would break down the list into smaller chunks
+  -Use paginator object  
+    Within shell again..
+     -use pagination_script.py
+  go to views in blog to finish pagination
