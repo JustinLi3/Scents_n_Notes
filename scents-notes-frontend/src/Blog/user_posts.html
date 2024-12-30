@@ -1,0 +1,51 @@
+{% extends "blog/base.html" %}
+{% comment %} Use this to plug into the block content (unique) {% endcomment %}  
+{% comment %} Inherit from base  {% endcomment %}
+{% block content%}
+{% comment %} retrieve username of clicked on post author {% endcomment %}
+    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    {% for post in posts%}   
+        <article class="media content-section">
+            {% comment %} Current post, author of current post, the profile of current author, image of profile and url  {% endcomment %}
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>  
+                    {% comment %} Filter through piping through format: Month, day, year {% endcomment %}
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> 
+                </div> 
+                {% comment %} Adding links to these individual posts {% endcomment %}
+                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+    {% endfor %}    
+    {% comment %} Check if the list of items has been divided into multiple pages {% endcomment %}
+    {% if is_paginated %}  
+        {%if page_obj.has_previous %} 
+            <a class = "btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class = "btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {%endif%} 
+        {% comment %} navigate to pages nearby {% endcomment %} 
+        {%for num in page_obj.paginator.page_range %}
+        {% comment %} If it is the current page we want to make it look unique {% endcomment %}
+            {%if page_obj.number ==  num%}  
+                <a class = "btn btn-info mb-4" href="?page={{num}}">{{num}}</a>  
+            {% comment %} Is the current number within the three previous/next pages {% endcomment %}
+            {%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+                <a class = "btn btn-outline-info mb-4" href="?page={{num}}">{{num}}</a>  
+            {%endif%}
+        {%endfor%} 
+        {% if page_obj.has_next %} 
+            <a class = "btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>  
+            <a class = "btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">Last</a>  
+
+        {% endif %}
+        {% comment %} <div class="my-5 ml-3 ">  Simple list of pages
+            Pages
+            {% for page_num in paginator.page_range %}  
+                <a class="btn btn-outline-dark color-black ml-2 px-3 py-2" href="/?page={{page_num}}"><strong>{{page_num}}</strong></a>
+            {% endfor %} 
+        </div> {% endcomment %}
+    {% endif %}
+{% endblock content %}
