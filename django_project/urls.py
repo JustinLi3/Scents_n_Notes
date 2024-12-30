@@ -27,7 +27,12 @@ urlpatterns = [
     path('', include('blog.urls')),    
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html', extra_context={'title': 'Login'}), name='login'),   #CLASS BASED VIEWS, does not handle templates so we could do it, Add templates to users 
-    path('logout/', user_views.logoutView, name='logout'),
+    path('logout/', user_views.logoutView, name='logout'), 
+    #Password reset view (route that provides a user with a form to fill out that would send a password reset instructions to the email)
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), name='password_reset'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
+    #Confirmation for added layer of security, with tokens verifying user 
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
     path('profile/', user_views.profile, name = 'profile' )
 ] 
 

@@ -119,3 +119,9 @@ Pagination
       num_pages 
       page_range
     
+Email/Password Reset 
+ -Django has built in functionality to generate a secure token to ensure only a specific user can reset their password 
+ Go to urls and add built in password reset views  
+ -We also need to include a confirmation route by passing two things into the URLS parameter 
+   (UID & token, to know as to whether the user who requested the password reset is the person trying to access page, added layer of security)
+ -We need an email service (gmail, let google know to expect python application)
