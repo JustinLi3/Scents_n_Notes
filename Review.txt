@@ -126,3 +126,7 @@ Email/Password Reset
    (UID & token, to know as to whether the user who requested the password reset is the person trying to access page, added layer of security)
  -We need an email service (gmail, let google know to expect python application) 
     Add within settings.py where your email is the sender of the password resets 
+
+Deployment 
+ -deploying to our linux server (linode, digital ocean, AWS) 
+ 
