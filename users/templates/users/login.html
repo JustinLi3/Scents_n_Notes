@@ -12,7 +12,10 @@
                 {% comment %} To add a new field, we need to create a new form that inherits form forms.py {% endcomment %}
             </fieldset> 
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Login</button>
+                <button class="btn btn-outline-info" type="submit">Login</button> 
+                <small class="text-muted ml-2">
+                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                </small>
             </div>
         </form> 
         <div class="border-top pt-3">
