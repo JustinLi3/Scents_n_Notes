@@ -7,12 +7,7 @@ const TestPage = () => {
   ];
 
   return (
-    <BaseLayout title="Test Page" messages={messages}>
-      <div>
-        <h1>Welcome to the Test Page</h1>
-        <p>This is a demo for the BaseLayout component.</p>
-      </div>
-    </BaseLayout>
+    <BaseLayout title="Test Page" messages={messages}></BaseLayout>
   );
 };
 

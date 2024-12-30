@@ -18,9 +18,9 @@ const BaseLayout = ({title, user, messages, children}) => {
       </head>
       <body>
         <header className="site-header">
-          <nav className="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+          <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div className="container">
-              <a className="navbar-brand mr-4" href="/">
+              <a className=" navbar-brand mr-4" href="/">
                 Scents &amp; Notes
               </a>
               <button
@@ -79,7 +79,7 @@ const BaseLayout = ({title, user, messages, children}) => {
         </header>
 
         {/* Main Content */}
-        <main role="main" className="container">
+        {/* <main role="main" className="container">
           <div className="row">
             <div className="col-md-8">
               {messages && messages.length > 0 && (
@@ -91,12 +91,9 @@ const BaseLayout = ({title, user, messages, children}) => {
               )}
               {children}
             </div>
-            <div className="col-md-4">
-              <div className="content-section">
-                <h3>Our Sidebar</h3>
-                <p className="text-muted">
-                  You can put any information here you'd like.
-                </p>
+            <div className="col-md-4 mt-5">
+              <div className="content-section mt-4">
+                <h3>Sidebar</h3>
                 <ul className="list-group">
                   <li className="list-group-item list-group-item-light">
                     Latest Posts
@@ -112,7 +109,7 @@ const BaseLayout = ({title, user, messages, children}) => {
               </div>
             </div>
           </div>
-        </main>
+        </main> */}
 
         {/* Footer Scripts */}
         <script
