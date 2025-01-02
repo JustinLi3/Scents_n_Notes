@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
 from django.contrib.auth.models import User 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Post
+from .serializers import PostSerializer
+
 #Class based views (list view)
 from django.views.generic import (
     ListView, 
@@ -111,6 +116,12 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
          if self.request.user == post.author:
               return True
          return False 
+
+class PostListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
 
 #blog -> templates -> blog -> template.html  
 

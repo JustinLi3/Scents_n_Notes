@@ -13,6 +13,9 @@ const BaseLayout = ({title, user, messages, children}) => {
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossOrigin="anonymous"/>
         {/* Replace the static file reference */}
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"></link>
         <link rel="stylesheet" type="text/css" href="/static/blog/main.css" />
         <title>{title ? `S&N - ${title}` : "Scents & Notes"}</title>
       </head>
@@ -20,7 +23,7 @@ const BaseLayout = ({title, user, messages, children}) => {
         <header className="site-header">
           <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div className="container">
-              <a className=" navbar-brand mr-4" href="/">
+              <a className=" navbar-brand mr-4 mt-2" style={{fontFamily:"Mrs Saint Delafield", fontSize:"40px"}} href="/">
                 Scents &amp; Notes
               </a>
               <button
@@ -79,7 +82,7 @@ const BaseLayout = ({title, user, messages, children}) => {
         </header>
 
         {/* Main Content */}
-        {/* <main role="main" className="container">
+        <main role="main" className="container">
           <div className="row">
             <div className="col-md-8">
               {messages && messages.length > 0 && (
@@ -91,9 +94,9 @@ const BaseLayout = ({title, user, messages, children}) => {
               )}
               {children}
             </div>
-            <div className="col-md-4 mt-5">
-              <div className="content-section mt-4">
-                <h3>Sidebar</h3>
+            <div className="col-md-4">
+              <div className="content-section">
+                <h5 style={{marginTop:"120px"}}>Sidebar</h5>
                 <ul className="list-group">
                   <li className="list-group-item list-group-item-light">
                     Latest Posts
@@ -109,7 +112,7 @@ const BaseLayout = ({title, user, messages, children}) => {
               </div>
             </div>
           </div>
-        </main> */}
+        </main> 
 
         {/* Footer Scripts */}
         <script

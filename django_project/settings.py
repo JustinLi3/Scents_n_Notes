@@ -43,7 +43,15 @@ INSTALLED_APPS = [
     'crispy_forms', 
     'crispy_bootstrap4',
     'tailwind',
+    'rest_framework', 
+    'corsheaders'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Allow all requests
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +61,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+     # React development server
+    "http://localhost:5173", 
 ]
 
 ROOT_URLCONF = 'django_project.urls'

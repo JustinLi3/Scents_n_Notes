@@ -1,5 +1,5 @@
 from django.urls import path   
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView, PostListAPIView
 from . import views 
 
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'), 
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+    path('api/posts/', PostListAPIView.as_view(), name='post-list-api'),
 
     #Set as the homepage
     #Specify the view that we want to handle logic at that home page route   
