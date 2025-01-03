@@ -8,17 +8,17 @@ const Login = () => {
         alert(JSON.stringify(d));
     return(
         <BaseLayout title="Login"> 
-            <div style={{marginTop:"120px"}} className="content-section border border-light p-3 rounded ">
+            <div style={{marginTop:"120px"}} className="content-section border border-muted p-3 rounded ">
                 <form onSubmit={handleSubmit(onSubmit)} method="POST">         
                     <fieldset className="form-group"> 
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input class="form-control" id="username" placeholder="Enter username" {...register("username")}/>
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <label htmlFor="username">Username</label>
+                            <input className="form-control" id="username" placeholder="Enter username" {...register("username")} required/>
+                            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password" {...register("password")}/>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input type="password" className="form-control" id="password" placeholder="Enter password" {...register("password")} required/>
                         </div> 
                         <legend className="border-bottom mb-4">Log In</legend> 
                     </fieldset> 
