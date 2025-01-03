@@ -1,10 +1,13 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 // Customizable with title and messages being visible but user replaces {% if user.is_authenticated %} and children replaces {% block content %}{% endblock content %}
-const BaseLayout = ({title, user, messages, children}) => {
+const BaseLayout = ({title, user, messages, children}) => { 
+  useEffect(()=>{
+    document.title = title ? `S&N - ${title}` : "S&N";
+  }, [title])
   return(
   <> 
-      <head>
+      <>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
@@ -13,13 +16,15 @@ const BaseLayout = ({title, user, messages, children}) => {
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossOrigin="anonymous"/>
         {/* Replace the static file reference */}
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-        <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"></link>
-        <link rel="stylesheet" type="text/css" href="/static/blog/main.css" />
-        <title>{title ? `S&N - ${title}` : "Scents & Notes"}</title>
-      </head>
-      <body>
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap" rel="stylesheet" crossOrigin="anonymous"></link>
+        <link rel="stylesheet" type="text/css" href="/static/blog/main.css" crossOrigin="anonymous"/>
+        {}
+        <title>{title || "Scents & Notes"}</title> 
+
+      </>
+      
         <header className="site-header">
           <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div className="container">
@@ -130,7 +135,6 @@ const BaseLayout = ({title, user, messages, children}) => {
           integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
           crossOrigin="anonymous"
         ></script>
-      </body>
     </>
   );
 };

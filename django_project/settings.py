@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',  
     'crispy_forms', 
-    'crispy_bootstrap4',
+    'crispy_bootstrap5',
     'tailwind',
     'rest_framework', 
     'corsheaders'
@@ -141,7 +141,8 @@ MEDIA_ROOT = str(BASE_DIR / 'media')
 #URL PATH (where the files are available in url (client-side))
 MEDIA_URL = '/media/' 
 #Template pack for forms
-CRISPY_TEMPLATE_PACK = 'bootstrap4' 
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5' 
+CRISPY_TEMPLATE_PACK = 'bootstrap5' 
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 #After successful login, user is redirected to this url 

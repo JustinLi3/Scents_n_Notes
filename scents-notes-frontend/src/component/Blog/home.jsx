@@ -4,7 +4,6 @@ import BaseLayout from "./baseLayout";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/posts/")
@@ -18,7 +17,7 @@ const Home = () => {
   }, []);  
 
   return (  
-    <BaseLayout>
+    <BaseLayout title="Home">
         <div className="ml-5" style={{marginTop:"120px"}}> 
             <h1 >Posts</h1> 
             {Array.isArray(posts) && posts.length > 0 ? (

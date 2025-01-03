@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import BaseLayout from "./baseLayout";
 
-const About = () => {
+const About = () => { 
    return( 
-      <BaseLayout>
+      <BaseLayout title="About">
       <div className="ml-5 mr-4" style={{ marginTop: "120px" }} >
          <h2>
             About
