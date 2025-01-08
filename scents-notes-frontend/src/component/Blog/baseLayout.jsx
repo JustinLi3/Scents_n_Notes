@@ -28,7 +28,7 @@ const BaseLayout = ({title, user, messages, children}) => {
         <header className="site-header">
           <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div className="container">
-              <a className=" navbar-brand mr-4 mt-2" style={{fontFamily:"Mrs Saint Delafield", fontSize:"40px"}} href="/">
+              <a className=" navbar-brand mr-4" style={{fontFamily:"Mrs Saint Delafield", fontSize:"40px"}} href="/">
                 Scents &amp; Notes
               </a>
               <button
@@ -87,7 +87,7 @@ const BaseLayout = ({title, user, messages, children}) => {
         </header>
 
         {/* Main Content */}
-        <main role="main" className="container">
+        <main role="main" className="container" style={{marginTop:"120px"}}>
           <div className="row">
             <div className="col-md-8">
               {messages && messages.length > 0 && (
@@ -99,21 +99,17 @@ const BaseLayout = ({title, user, messages, children}) => {
               )}
               {children}
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4" >
               <div className="content-section">
-                <h5 style={{marginTop:"120px"}}>Sidebar</h5>
-                <ul className="list-group">
-                  <li className="list-group-item list-group-item-light">
-                    Latest Posts
-                  </li>
-                  <li className="list-group-item list-group-item-light">
-                    Announcements
-                  </li>
-                  <li className="list-group-item list-group-item-light">
-                    Calendars
-                  </li>
-                  <li className="list-group-item list-group-item-light">etc</li>
-                </ul>
+                <h3>Our Sidebar</h3>
+                <p class='text-muted'>You can put any information here you'd like.
+                  <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">Latest Posts</li>
+                    <li class="list-group-item list-group-item-light">Announcements</li>
+                    <li class="list-group-item list-group-item-light">Calendars</li>
+                    <li class="list-group-item list-group-item-light">etc</li>
+                  </ul>
+                </p>
               </div>
             </div>
           </div>

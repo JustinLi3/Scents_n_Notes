@@ -4,7 +4,7 @@ import BaseLayout from "./baseLayout";
 const About = () => { 
    return( 
       <BaseLayout title="About">
-      <div className="ml-5 mr-4" style={{ marginTop: "120px" }} >
+      <div className="mr-4" >
          <h2>
             About
          </h2>           

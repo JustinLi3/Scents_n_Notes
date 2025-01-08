@@ -8,7 +8,7 @@ const Login = () => {
         alert(JSON.stringify(d));
     return(
         <BaseLayout title="Login"> 
-            <div style={{marginTop:"120px"}} className="content-section border border-muted p-3 rounded ">
+            <div className="content-section border border-muted p-3 rounded ">
                 <form onSubmit={handleSubmit(onSubmit)} method="POST">         
                     <fieldset className="form-group"> 
                         <div class="form-group">

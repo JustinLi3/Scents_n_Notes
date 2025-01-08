@@ -9,7 +9,7 @@ const Register = () => {
         alert(JSON.stringify(d));
     return (
         <BaseLayout title="Register"> 
-             <div style={{marginTop:"120px"}} className="content-section border border-muted p-3 rounded ">
+             <div className="content-section border border-muted p-3 rounded ">
                 <form  onSubmit={handleSubmit(onSubmit)} method="POST"> 
                     <fieldset className="form-group">
                         <div className="form-group">

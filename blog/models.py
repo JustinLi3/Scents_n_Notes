@@ -15,7 +15,8 @@ class Post(models.Model):  #Each class would be its own table in database
     author = models.ForeignKey(User, on_delete=models.CASCADE) #if user created post and was deleted, do we want to delete their posts or hold them as null 
         #ensures that when a user is deleted, their posts are deleted as well 
         #foreign key: link between two database tables, linking each post to a user  
-         #use on model with many instances related to one instance of another model   
+         #use on model with many instances related to one instance of another model    
+    # author_name = 
     def __str__(self): 
         return self.title 
         #changes take effect after reopening

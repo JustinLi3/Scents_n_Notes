@@ -120,7 +120,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class PostListAPIView(APIView):
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
+        serializer = PostSerializer(posts, many=True, context={'request':request})
         return Response(serializer.data)
 
 #blog -> templates -> blog -> template.html  
