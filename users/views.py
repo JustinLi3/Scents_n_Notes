@@ -1,10 +1,19 @@
 from django.shortcuts import render, redirect
 #Module that django includes where you could create forms
 from django.contrib.auth.forms import UserCreationForm  
-from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth import authenticate, login, logout
+from rest_framework.views import APIView
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages  
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib import messages   
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm 
+from rest_framework.response import Response
+from .models import Profile 
+from .serializers import UserSerializer
+from django.contrib.auth.models import User
+
+
+
+
 
 '''
 Small popup for users 
@@ -62,4 +71,8 @@ def logoutView(request):
     logout(request)
     return render(request, 'users/logout.html', {'title':'Logged Out'})  # Show a logout confirmation page 
 
-    
+class UserListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        posts = User.objects.all()
+        serializer = UserSerializer(posts, many=True, context={'request':request})
+        return Response(serializer.data)

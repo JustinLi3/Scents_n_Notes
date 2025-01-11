@@ -1,12 +1,36 @@
 import React from "react"; 
+import Axios from "axios";
 import BaseLayout from "../Blog/baseLayout";
 import { useForm } from "react-hook-form" 
 
 const Register = () => {
     const {register, handleSubmit, watch, formState: { errors }} = useForm();  
     const password = watch("password");
-    const onSubmit = (d) => 
-        alert(JSON.stringify(d));
+    const onSubmit = async (d) => {
+        try {
+            const response = await Axios.post(
+                "http://127.0.0.1:8000/api/register/",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        // Include CSRF token if required
+                        "X-CSRFToken": getCookie("csrftoken"), // Function below to get the CSRF token
+                      },
+                }
+            )
+        }
+        }
+    }
+        Axios.post(`URL`, JSON.stringify(d),
+        {
+            headers: {
+                "Authorization": `AUTHORIZATION_KEY`,
+                "Content-Type": 'application/json'
+            }
+        }
+    )
+    .then(res => console.log(res))
+    .catch(error => console.err(error))
     return (
         <BaseLayout title="Register"> 
              <div className="content-section border border-muted p-3 rounded ">
