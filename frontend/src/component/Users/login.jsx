@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import BaseLayout from "../Blog/baseLayout";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom"; // Import useLocation and useNavigate
+import { useAuth } from "../AuthContext"; // Import useAuth to manage authentication state
+import { useLocation, useNavigate } from "react-router-dom"; 
 import Axios from "axios";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const location = useLocation(); // Access the state passed from the Register component
-  const navigate = useNavigate(); // Initialize the navigate function
+  const location = useLocation(); 
+  const navigate = useNavigate(); 
+
+  const { login } = useAuth(); // Get the login function from AuthContext
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState(
     location.state?.message || ""
-  ); // Display the message passed from the register page
+  );
 
   const onSubmit = async (data) => {
     try {
@@ -21,15 +24,17 @@ const Login = () => {
         password: data.password,
       });
 
-      // Save tokens to localStorage (or context if preferred)
+      // Save tokens in localStorage
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
 
+      // Update user state in AuthContext
+      login({ username: data.username }); // Pass the user data to AuthContext
+
+      // Clear messages and redirect
       setSuccessMessage("Login successful!");
       setErrorMessage("");
-
-      // Redirect to the homepage or dashboard after login
-      navigate("/");
+      navigate("/"); // Redirect to the homepage
     } catch (error) {
       setErrorMessage("Invalid username or password");
       setSuccessMessage("");
