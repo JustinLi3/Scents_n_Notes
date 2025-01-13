@@ -50,7 +50,8 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Use JWT for authentication
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',  # Allow all requests
@@ -148,7 +149,7 @@ MEDIA_URL = '/media/'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5' 
 CRISPY_TEMPLATE_PACK = 'bootstrap5' 
 
-STATICFILES_DIRS = [BASE_DIR / "backend/static"]
+STATICFILES_DIRS = [BASE_DIR / "blog" / "static" / "blog"]
 #After successful login, user is redirected to this url 
 LOGIN_REDIRECT_URL = 'blog-home'
 #If user tries to access a view that requires a login but is not logged in, it is redirected to login 

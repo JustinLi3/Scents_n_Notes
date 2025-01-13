@@ -7,14 +7,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages   
 from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm 
 from rest_framework.response import Response
-from .models import Profile 
 from django.views.decorators.csrf import csrf_exempt
 from .serializers import UserSerializer
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django import forms
 import json 
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
 
 
 
@@ -134,3 +136,19 @@ class LoginView(APIView):
             login(request, user)
             return Response({"message": "Login successful!"}, status=status.HTTP_200_OK)
         return Response({"error": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
+    
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def post(self, request):
+        user = request.user
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Profile updated successfully!", "data": serializer.data})
+        return Response(serializer.errors, status=400)

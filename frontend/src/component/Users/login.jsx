@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BaseLayout from "../Blog/baseLayout";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../AuthContext"; // Import useAuth to manage authentication state
-import { useLocation, useNavigate } from "react-router-dom"; 
+import { useLocation, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const Login = () => {
@@ -13,9 +13,7 @@ const Login = () => {
   const { login } = useAuth(); // Get the login function from AuthContext
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState(
-    location.state?.message || ""
-  );
+  const [successMessage, setSuccessMessage] = useState(location.state?.message || "");
 
   const onSubmit = async (data) => {
     try {
@@ -29,13 +27,14 @@ const Login = () => {
       localStorage.setItem("refresh_token", response.data.refresh);
 
       // Update user state in AuthContext
-      login({ username: data.username }); // Pass the user data to AuthContext
+      login({ username: data.username }); // Pass user data to AuthContext
 
       // Clear messages and redirect
       setSuccessMessage("Login successful!");
       setErrorMessage("");
       navigate("/"); // Redirect to the homepage
     } catch (error) {
+      console.error("Login error:", error);
       setErrorMessage("Invalid username or password");
       setSuccessMessage("");
     }
@@ -46,10 +45,7 @@ const Login = () => {
       <div className="content-section border border-muted p-3 rounded">
         {/* Display Success Message */}
         {successMessage && (
-          <div
-            className="alert alert-success alert-dismissible fade show"
-            role="alert"
-          >
+          <div className="alert alert-success alert-dismissible fade show" role="alert">
             {successMessage}
             <button
               type="button"
@@ -64,10 +60,7 @@ const Login = () => {
 
         {/* Display Error Message */}
         {errorMessage && (
-          <div
-            className="alert alert-danger alert-dismissible fade show"
-            role="alert"
-          >
+          <div className="alert alert-danger alert-dismissible fade show" role="alert">
             {errorMessage}
             <button
               type="button"
@@ -91,7 +84,7 @@ const Login = () => {
                 {...register("username")}
                 required
               />
-              <small id="emailHelp" className="form-text text-muted">
+              <small className="form-text text-muted">
                 We'll never share your email with anyone else.
               </small>
             </div>
@@ -106,7 +99,6 @@ const Login = () => {
                 required
               />
             </div>
-            <legend className="border-bottom mb-4">Log In</legend>
           </fieldset>
           <div className="form-group">
             <button className="btn btn-sm btn-outline-info" type="submit">

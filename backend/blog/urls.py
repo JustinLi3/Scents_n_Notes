@@ -14,7 +14,6 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('api/posts/', PostListAPIView.as_view(), name='post-list-api'),
-
     #Set as the homepage
     #Specify the view that we want to handle logic at that home page route   
     #Specify name for route to not collide with other routes  

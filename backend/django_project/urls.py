@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from users import views as user_views  
 from django.contrib.auth import views as auth_views  
-from users.views import  UserListAPIView, register_api, register, LoginView
+from users.views import  UserListAPIView, register_api, register, LoginView, ProfileView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -41,6 +41,8 @@ urlpatterns = [
     path('api/register_api/', register_api, name='register_api'),
     path('api/login/', LoginView.as_view(), name='login_view'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/profile/', ProfileView.as_view(), name='api-profile'),  # Use /api/profile/
+
 
     
 
