@@ -129,7 +129,7 @@ MEDIA_URL = '/media/'
 #Template pack for forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4' 
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "blog"/ "static"]
 #After successful login, user is redirected to this url 
 LOGIN_REDIRECT_URL = 'blog-home'
 #If user tries to access a view that requires a login but is not logged in, it is redirected to login 
