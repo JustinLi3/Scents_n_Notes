@@ -3,12 +3,12 @@
 {% comment %} Inherit from base  {% endcomment %}
 {% block content%}
     {% for post in posts%}   
-        <article class="media content-section">
+        <article class="media content-section shadow-sm">
             {% comment %} Current post, author of current post, the profile of current author, image of profile and url  {% endcomment %}
-            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+            <img class="rounded-circle border article-img" src="{{ post.author.profile.image.url }}" alt="">
             <div class="media-body">
                 <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>  
+                    <a class="mr-2" style="color:#3E5879; transition: color 0.15s;" onmouseover="this.style.color='white';" onmouseout="this.style.color='#3E5879';"  href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>  
                     {% comment %} Filter through piping through format: Month, day, year {% endcomment %}
                     <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> 
                 </div> 
