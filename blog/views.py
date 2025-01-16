@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
 from django.contrib.auth.models import User 
+#Import for search functionality
+from django.db.models import Q 
 #Class based views (list view)
 from django.views.generic import (
     ListView, 
@@ -31,14 +33,16 @@ from .models import Post
 #Function based views: Url patterns directed to a certain view, which are these functions, and the views handle the logic for routes and render templates 
 #Class based views: More functionality as it handles more backend logic (list, detail, create, update, delete views)
 # Examples: List view (blog posts, subscriptions,) clicking on one would send us to a Detail view (descriptions), then we could update and delete views (update/del views) 
-def home(request):   
-    # return HttpResponse('<h1>Blog Home</h1>')  
-    context = { #create context just so you could pass in additional information
-        'posts': Post.objects.all(),   #posts variable is going to be accessible within our template 
-        'title': 'Home'
-    }
-    return render(request, 'blog/home.html', context) #template name that we want to render, specifying the subdirectory within templates
-    #Additional optional parameter to pass in information into our template
+
+# def home(request):   
+#     # return HttpResponse('<h1>Blog Home</h1>')  
+#     context = { #create context just so you could pass in additional information
+#         'posts': Post.objects.all(),   #posts variable is going to be accessible within our template 
+#         'title': 'Home'
+#     }
+#     return render(request, 'blog/home.html', context) #template name that we want to render, specifying the subdirectory within templates
+#     #Additional optional parameter to pass in information into our template
+
 def about(request): 
     return render(request, 'blog/about.html', {'title':'About'}) 
 
@@ -52,6 +56,16 @@ class PostListView(ListView):
     ordering = ['-date_posted'] #We are essentially ordering our blogs such that (with -) the most recent are at the top 
     paginate_by = 5 #posts per page 
     #now we need to add a link to other pages  (manually: /?page=_), this is done within home.html
+    def get_queryset(self):
+        query = self.request.GET.get('q')  # Get the search query
+        # print(f"Search query: {query}")  # Debugging: Check the search term in the terminal
+
+        if query:
+            # Filter posts by title or content, case-insensitive
+            return Post.objects.filter(
+                Q(title__icontains=query) | Q(content__icontains=query)
+            )
+        return Post.objects.all()  # Default: Return all posts
 
 
 class UserPostListView(ListView):  

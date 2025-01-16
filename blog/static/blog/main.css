@@ -3,6 +3,33 @@ body {
   color: #213555;
   margin-top: 5rem;
 }
+button{
+  background:#F5EFE7;
+  border: 1px solid #213555 !important ;
+
+}
+
+
+ul li {
+  position: relative; /* Makes the list item the parent for the link's positioning */ 
+  padding: 25px !important;
+}
+
+ul li a {
+  position: absolute; /* Makes the link cover the entire list item */
+  top: 12px;
+  left: 10px;
+  width: 100%; /* Ensures the link stretches across the full width of the list item */
+  height: 100%; /* Ensures the link covers the full height of the list item */
+  text-decoration: none; /* Removes underline */
+  color: inherit; /* Keeps the text color of the link */
+  z-index: 1; /* Brings the link above the bullet */
+}
+
+ul li:hover {
+  cursor: pointer; /* Makes the entire list item appear interactive */
+}
+
 
 h1, h2, h3, h4, h5, h6 {
   color: #213555;
@@ -18,9 +45,11 @@ ul {
 }
 
 .navbar{
-  border: 1px solid #213555 !important;
+  border-bottom: 1px solid #213555 !important;
+  background: #F5EFE7 ; 
 
 }
+
 .site-header .navbar-nav .nav-link {
   color: #3E5879; 
   transition: color 0.15s; 
@@ -28,6 +57,17 @@ ul {
   border-color:#3E5879; 
   margin-right: 10px; 
   
+} 
+
+.searchBar{
+  background: #F5EFE7;
+  border: 1px solid #213555; 
+  border-radius: 20px; 
+  width:300px;
+}
+
+.d-flex{
+  gap:5px !important;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -41,14 +81,24 @@ ul {
 
 .content-section {
   background: #F5EFE7;
-  padding: 10px 20px;
+  padding: 20px 20px;
   border: 1px solid #213555;
-  border-radius: 3px;
-  margin-bottom: 20px;
+  border-radius: 15px; 
+  margin-bottom: 15px;
 }
 
-.article-title {
-  color: #213555; 
+.paginationBtn, .logoutBtn{
+  border: 1px solid #213555;
+} 
+.currentBtn{
+  background: #213555; 
+  color: #F5EFE7
+
+
+}
+
+.article-title, a{
+  color: #213555 !important; 
   transition: color 0.5s;
 } 
 .btn:hover {
@@ -56,11 +106,20 @@ ul {
   transform: scale(1.05); /* Optional for hover effect */
 }
 
+.form-control, .list-group-item{
+  border: 1px solid #213555 !important ; 
+  transition: background 0.15s;
+}
+
+.list-group-item:hover{
+  background:#ebebeb !important;
+}
+
 .btn {
     overflow: visible; /* Ensure content isn't clipped */
 }
-a.article-title:hover {
-  color: 3E5879;
+a:hover,article-title:hover {
+  color: #7388a3 !important;
   text-decoration: none;
 }
 
@@ -77,7 +136,7 @@ a.article-title:hover {
 .article-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
+  border-bottom: 1px solid #979caa;
 }
 
 .article-metadata a:hover {

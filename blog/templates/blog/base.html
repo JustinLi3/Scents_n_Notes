@@ -42,15 +42,17 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link mt-4 py-0 " href="/">Home</a>
               <a class="nav-item nav-link mt-4 py-0 " href="/about">About</a>
-            </div>
-            <!-- Navbar Right Side -->
+            </div> 
+            <form method="GET" action="{% url 'blog-home' %}">
+                <input class="searchBar mt-4 py-0 pl-2 mr-5" type="text" name="q" placeholder="Search...">
+            </form> 
             <div class="navbar-nav"> 
               {% if user.is_authenticated %}   
-                <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-item nav-link mt-4 py-0" href="{% url 'post-create' %}">New Post</a>
+                <a class="nav-item nav-link mt-4 py-0" href="{% url 'profile' %}">Profile</a>
                 <form method="post" action="{% url 'logout' %}">
                   {% csrf_token %}
-                  <button class="btn btn-link nav-item nav-link" type="submit">Logout</button>
+                  <button class="nav-item nav-link btn logoutBtn mt-4 py-0" type="submit">Logout</button>
                 </form>   
               {% else %} 
                 <a class="nav-item nav-link mt-4 py-0"  href="{% url 'login'%}">Login</a>
@@ -80,10 +82,10 @@
             <div class="content-section">
               <h3>Our Sidebar</h3>
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
+               <li class=" list-group-item cursor"><a class="w-100"href="">Find Your Scent</a></li>
+                <li class=" list-group-item cursor"><a class="" href="">Justin's Picks</a></li>
+                <li class=" list-group-item cursor"><a href="">How to Choose Cologne</a></li>
+                <li class=" list-group-item cursor"><a href="">What Works for You?</a></li>
               </ul>
             </div>
           </div>
