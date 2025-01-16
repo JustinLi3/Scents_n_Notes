@@ -40,11 +40,23 @@ from .models import Post
 #         'posts': Post.objects.all(),   #posts variable is going to be accessible within our template 
 #         'title': 'Home'
 #     }
-#     return render(request, 'blog/home.html', context) #template name that we want to render, specifying the subdirectory within templates
+#     return render(request, 'blog/homep.html', context) #template name that we want to render, specifying the subdirectory within templates
 #     #Additional optional parameter to pass in information into our template
 
 def about(request): 
-    return render(request, 'blog/about.html', {'title':'About'}) 
+    return render(request, 'blog/about.html', {'title':'About'})  
+
+def picks(request): 
+    return render(request, 'blog/picks.html', {'title':'Picks'})  
+
+def find_scent(request): 
+    return render(request, 'blog/scents.html', {'title':'Find Scents'})  
+
+def buy_cologne(request): 
+    return render(request, 'blog/cologne.html', {'title':'Buy Cologne'})  
+
+def works(request): 
+    return render(request, 'blog/works.html', {'title':'What Works?'})  
 
 #inherit from that list view
 class PostListView(ListView):  

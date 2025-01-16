@@ -82,10 +82,10 @@
             <div class="content-section">
               <h3>Our Sidebar</h3>
               <ul class="list-group">
-               <li class=" list-group-item cursor"><a class="w-100"href="">Find Your Scent</a></li>
-                <li class=" list-group-item cursor"><a class="" href="">Justin's Picks</a></li>
-                <li class=" list-group-item cursor"><a href="">How to Choose Cologne</a></li>
-                <li class=" list-group-item cursor"><a href="">What Works for You?</a></li>
+                <li class=" list-group-item cursor"><a href="{% url 'find-scent' %}">Find Your Scent</a></li> 
+                <li class=" list-group-item cursor"><a href="{% url 'justin-picks' %}">Justin's Picks</a></li>
+                <li class=" list-group-item cursor"><a href="{% url 'buy-cologne' %}">How to Buy Cologne</a></li>
+                <li class=" list-group-item cursor"><a href="{% url 'what-works' %}">What Works for You?</a></li> 
               </ul>
             </div>
           </div>

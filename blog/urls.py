@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path   
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView, picks, find_scent, buy_cologne,works
 from . import views 
 
 urlpatterns = [
@@ -19,7 +19,16 @@ urlpatterns = [
     #Set as the homepage
     #Specify the view that we want to handle logic at that home page route   
     #Specify name for route to not collide with other routes  
-    path('about/',views.about, name='blog-about')
+    path('about/',views.about, name='blog-about'), 
+    #Side bar options
+    path('picks/',views.picks, name='justin-picks'), 
+    path('find-scent/',views.find_scent, name='find-scent'), 
+    path('buy-cologne/',views.buy_cologne, name='buy-cologne'), 
+    path('what-works/',views.works, name='what-works'), 
+
+
+
+
 ] 
 
 if settings.DEBUG:
