@@ -9,7 +9,6 @@ button{
 
 }
 
-
 ul li {
   position: relative; /* Makes the list item the parent for the link's positioning */ 
   padding: 25px !important;
@@ -35,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #213555;
 }
 
-li{
+li, .card-body{
   background: #F5EFE7 !important; 
   color: #213555 !important;
 } 
@@ -70,6 +69,10 @@ ul {
   gap:5px !important;
 }
 
+.pick_imgs{
+  max-width: 120%;
+  height: auto;
+}
 .site-header .navbar-nav .nav-link:hover {
   color: #ffffff; 
 }
@@ -78,6 +81,10 @@ ul {
   font-weight: 500;
 } 
 
+.pick-container{
+  border: 1px solid #213555;
+  border-radius: 15px; 
+}
 
 .content-section {
   background: #F5EFE7;
