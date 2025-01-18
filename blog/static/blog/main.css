@@ -36,7 +36,8 @@ h1, h2, h3, h4, h5, h6 {
 
 li, .card-body{
   background: #F5EFE7 !important; 
-  color: #213555 !important;
+  color: #213555 !important; 
+
 } 
 
 ul { 
@@ -57,7 +58,10 @@ ul {
   margin-right: 10px; 
   
 } 
+.card-body{
+  border: 1px solid #213555; 
 
+}
 .searchBar{
   background: #F5EFE7;
   border: 1px solid #213555; 
@@ -99,7 +103,7 @@ ul {
 } 
 .currentBtn{
   background: #213555; 
-  color: #F5EFE7
+  color: #F5EFE7 !important
 
 
 }
