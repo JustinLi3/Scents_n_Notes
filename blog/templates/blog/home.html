@@ -5,7 +5,7 @@
     {% comment %}Search query sent to the same URL{% endcomment %}
 
     {% for post in posts%}   
-        <article class="media content-section shadow-sm">
+        <article class="media content-section shadow">
             {% comment %} Current post, author of current post, the profile of current author, image of profile and url  {% endcomment %}
             <img class="rounded-circle border border-dark article-img" src="{{ post.author.profile.image.url }}" alt="">
             <div class="media-body">

@@ -76,8 +76,8 @@ class PostListView(ListView):
             # Filter posts by title or content, case-insensitive
             return Post.objects.filter(
                 Q(title__icontains=query) | Q(content__icontains=query)
-            )
-        return Post.objects.all()  # Default: Return all posts
+            ).order_by('-date_posted')
+        return Post.objects.all().order_by('-date_posted')  # Default: Return all posts
 
 
 class UserPostListView(ListView):  
