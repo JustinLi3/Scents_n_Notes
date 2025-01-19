@@ -1,16 +1,19 @@
 {% extends "blog/base.html" %}
 {% block content%} 
-    <div class="form-container p-3">
+    <div class="form-container p-3 mb-4">
         <h1 class="d-flex justify-content-center">Find Your Fragrance</h1>
-        <div class="w-100 my-3  border border-bottom-dark"></div>
-        <form method="GET" action="{% url 'find-scent' %} id="preferences" ">
+        <div class="w-100 my-3  border border-bottom-dark"></div> 
+        <div class="border border-danger text-danger " id="error-message" style="display: none; margin-top: 10px;"></div>
+
+        {% comment %} action="{% url 'find-scent' %} {% endcomment %}
+        <form method="GET"  id="preferences" >
             <div class="form-group">
                 <label for="email">Email address <small>(optional)</small></label>
                 <input type="email" class="form-control" id="email" placeholder="name@example.com">
               </div>
               <div class="form-group">
                 <label for="type">Fragrance Type</label>
-                <select class="form-control" id="type" required>
+                <select class="form-control" id="fragrance-type">
                   <option>No preference</option>
                   <option>Cologne</option>
                   <option>Perfume</option>
@@ -19,9 +22,9 @@
               </div>
     
               <div class="form-group row">
-                <div class="col-md-6 text-center">
+                <div class="col w-auto text-center">
                     <label for="fragrance-format" class="">Fragrance Format</label>
-                    <select multiple="multiple" id="fragrance-format" class="fragrance-format multiple-checkboxes form-control" required>
+                    <select multiple="multiple" id="fragrance-format" class="fragrance-format multiple-checkboxes form-control" >
                         <option>Eau de Parfum (EDP)</option>
                         <option>Eau de Toilette (EDT)</option>
                         <option>Eau de Cologne</option>
@@ -29,9 +32,9 @@
                         <option>Solid Perfumes</option>
                     </select>
                 </div>
-                <div class="col-md-6 text-center">
+                <div class="col w-auto text-center">
                     <label for="scent-portfolio" class="">Scent Portfolio</label>
-                    <select multiple="multiple" id="scent-portfolio" class="scent-portfolio multiple-checkboxes form-control" required>
+                    <select multiple="multiple" id="scent-portfolio" class="scent-portfolio multiple-checkboxes form-control" >
                         <option>Fresh</option>
                         <option>Floral</option>
                         <option>Fruity</option>
