@@ -1,6 +1,8 @@
+import json
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User   
+from django.http import JsonResponse
 #Import for search functionality
 from django.db.models import Q 
 #Class based views (list view)
@@ -58,6 +60,11 @@ def buy_cologne(request):
 def works(request): 
     return render(request, 'blog/works.html', {'title':'What Works?'})  
 
+# def recommend(request):
+    # if request.method == 'POST':
+        
+            #Parsing 
+
 #inherit from that list view
 class PostListView(ListView):  
     #Tell our model what to query 
@@ -94,7 +101,9 @@ class UserPostListView(ListView):
 
 #Detail view for each post in PostListView 
 class PostDetailView(DetailView): 
-    model = Post
+    model = Post 
+
+
 
 #Create a new post with the fields being a title and content, with date being automatically filled 
 #V here we put in the login mixin, ensuring that the user is logged in prior to creating posts 

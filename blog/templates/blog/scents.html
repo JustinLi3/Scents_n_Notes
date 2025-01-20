@@ -1,14 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content%} 
-    <div class="form-container p-3 mb-4">
+    <div class="form-container p-3 mb-4 shadow">
         <h1 class="d-flex justify-content-center">Find Your Fragrance</h1>
         <div class="w-100 my-3  border border-bottom-dark"></div> 
         <div class="border border-danger rounded text-danger p-2 mb-4" id="error-message" style="display: none; margin-top: 10px;"></div>
-
-        {% comment %} action="{% url 'find-scent' %} {% endcomment %}
-        <form method="GET"  id="preferences" >
+        <form method="POST" id="preferences" > 
+          {% csrf_token %}
             <div class="form-group">
-                <label for="email">Email address <small>(optional)</small></label>
+                <label for="email">Email address <small>(Optional)</small></label>
                 <input type="email" class="form-control" id="preference-email" placeholder="name@example.com">
               </div>
               <div class="form-group mb-0">
@@ -23,7 +22,7 @@
     
               <div class="form-group row">
                 <div class="col w-auto text-center mt-4">
-                    <label for="fragrance-format" class="">Fragrance Format</label>
+                    <label for="fragrance-format" class="">Fragrance Format*</label>
                     <select multiple="multiple" id="fragrance-format" class="fragrance-format multiple-checkboxes form-control" >
                         <option>Eau de Parfum (EDP)</option>
                         <option>Eau de Toilette (EDT)</option>
@@ -33,7 +32,7 @@
                     </select>
                 </div>
                 <div class="col w-auto text-center mt-4">
-                    <label for="scent-portfolio" class="">Scent Portfolio</label>
+                    <label for="scent-portfolio" class="">Scent Portfolio*</label>
                     <select multiple="multiple" id="scent-portfolio" class="scent-portfolio multiple-checkboxes form-control" >
                         <option>Fresh</option>
                         <option>Floral</option>
@@ -49,8 +48,8 @@
             </div>
     
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Describe yourself! <small>(Optional)</small></label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+              <label for="personality-traits">Describe Your Personality! <small>(Optional)</small></label>
+              <textarea class="form-control" placeholder= "e.g., adventurous, romantic, confident, laid-back" id="personality-traits" rows="2"></textarea>
             </div> 
             <div class="w-100 mt-3  border border-bottom-dark"></div>
 
