@@ -53,14 +53,12 @@ $(document).ready(function() {
     if (personalityTraits){
       personalityTraits = "Personality Traits: " + personalityTraits;
     }
-    
     if (!valid){ 
       errorMessage.html(message); 
-      errorMessage.css("display", "block");
+      errorMessage.css("display", "block"); 
+      return; //Stop further execution if form is invalid
     }
-    else{ 
-      errorMessage.css("display", "none");
-    }
+    errorMessage.css("display", "none");
 
     let userPreferences = fragranceType + "\n" + fragranceFormat + "\n" + scentPortfolio + "\n" + personalityTraits;
 
@@ -76,9 +74,17 @@ $(document).ready(function() {
       data: JSON.stringify(formData), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
-        alert("Recommendations received!"); 
         const recommendations = response.recommendations;   
-        console.log(response); // Debug the response
+        // Example of toggling a modal   
+        $("#recommendations-list").empty();
+
+        recommendations.map(fragrance => {
+          const listItem = $('<li>'); 
+          listItem.addClass("my-3 ml-3")
+          listItem.text(fragrance);
+          $('#recommendations-list').append(listItem);
+        });
+        $('#preference-modal').modal('show'); 
       },
       error: function (xhr, status, error) {
         console.error("Error:", error);

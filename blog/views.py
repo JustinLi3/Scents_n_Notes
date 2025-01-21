@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
 from django.contrib.auth.models import User   
-from django.http import JsonResponse
+from django.http import JsonResponse 
 #Import for search functionality
 from django.db.models import Q 
 #Class based views (list view)
@@ -14,6 +14,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post  
+import os 
 
 
 #Use as dummy data, as if you retrieved this data from a database

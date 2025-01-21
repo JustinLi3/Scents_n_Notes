@@ -3,7 +3,8 @@ body {
   color: #213555;
   margin-top: 5rem;
 }
-button{
+
+button, .modal-content{
   background:#F5EFE7;
   border: 1px solid #213555 !important ;
 
@@ -58,6 +59,9 @@ ul {
   margin-right: 10px; 
   
 } 
+#recommendations-list{
+  margin-bottom:0px;
+}
 .card-body, .form-container{
   border: 1.5px solid #213555; 
 
