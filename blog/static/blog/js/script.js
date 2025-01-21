@@ -76,7 +76,8 @@ $(document).ready(function() {
       data: JSON.stringify(formData), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
-        alert("Recommendations received!");
+        alert("Recommendations received!"); 
+        const recommendations = response.recommendations;   
         console.log(response); // Debug the response
       },
       error: function (xhr, status, error) {

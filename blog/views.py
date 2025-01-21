@@ -60,10 +60,33 @@ def buy_cologne(request):
 def works(request): 
     return render(request, 'blog/works.html', {'title':'What Works?'})  
 
-# def recommend(request):
-    # if request.method == 'POST':
+def recommend(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email')
+            userPreferences = data.get('userPreferences')
+            # (Optional) Debugging logs (remove in production)
+            print(f"Email: {email}")
+            print(f"User Preferences: {userPreferences}") 
+            recommendations = [
+                "Fragrance 1",
+                "Fragrance 2",
+                "Fragrance 3",
+                "Fragrance 4",
+                "Fragrance 5",
+            ] 
+            return JsonResponse({
+                'recommendations' :recommendations
+            })
+        except Exception as e:
+            #Return error details for debugging 
+            return JsonResponse({'error': str(e)}, status = 400)
+    # Return error response for invalid request methods
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
         
-            #Parsing 
+
+            
 
 #inherit from that list view
 class PostListView(ListView):  

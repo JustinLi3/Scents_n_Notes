@@ -25,6 +25,7 @@ urlpatterns = [
     path('find-scent/',views.find_scent, name='find-scent'), 
     path('buy-cologne/',views.buy_cologne, name='buy-cologne'), 
     path('what-works/',views.works, name='what-works'), 
+    path('recommend/', views.recommend, name="recommend" )
 
 
 
