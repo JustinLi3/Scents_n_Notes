@@ -61,7 +61,7 @@ $(document).ready(function() {
     errorMessage.css("display", "none");
 
     let userPreferences = fragranceType + "\n" + fragranceFormat + "\n" + scentPortfolio + "\n" + personalityTraits;
-
+    console.log(userPreferences)
     let formData = {
       email: email,
       userPreferences: userPreferences
