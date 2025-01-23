@@ -58,7 +58,11 @@ ul {
   border-color:#3E5879; 
   margin-right: 10px; 
   
-} 
+}  
+
+button.close{
+  border-width: 0px !important;
+}
 #recommendations-list{
   margin-bottom:0px;
 }

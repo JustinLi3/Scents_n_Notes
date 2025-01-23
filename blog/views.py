@@ -14,8 +14,8 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post  
-import os 
-
+from .utils.fragrance_recommender import fragrance_recommender 
+import os
 
 #Use as dummy data, as if you retrieved this data from a database
 # posts = [
@@ -64,21 +64,13 @@ def works(request):
 def recommend(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            email = data.get('email')
+            data = json.loads(request.body) 
+            email = data.get('email') 
             userPreferences = data.get('userPreferences')
             # (Optional) Debugging logs (remove in production)
-            print(f"Email: {email}")
-            print(f"User Preferences: {userPreferences}") 
-            recommendations = [
-                "Fragrance 1",
-                "Fragrance 2",
-                "Fragrance 3",
-                "Fragrance 4",
-                "Fragrance 5",
-            ] 
+            recommendations = fragrance_recommender(userPreferences)
             return JsonResponse({
-                'recommendations' :recommendations
+                'recommendations' : recommendations
             })
         except Exception as e:
             #Return error details for debugging 
