@@ -16,14 +16,11 @@ client = TavilyClient(api_key=os.environ.get('TAVILY_API_KEY'))
 
 def fragrance_recommender(userPreferences):  
     # Define the query to retrieve data from Tavily 
-    print("TEST 1")
     query = "Given the user's preferences as follows: " + userPreferences + ", list the top 5 bestselling fragrances that match these preferences. Please return only the names of the fragrances, separated by a '/' (e.g., fragrance1/fragrance2/fragrance3/fragrance4/fragrance5), without additional text or explanations."
-    print("TEST 2")
 
     #Fetch search results, top 3 relevant sources
     response = client.search(query, max_results= 3, search_depth="basic")['results']
     #LangChain Prompt (Query To Process Data): 
-    print("TEST 2")
 
     prompt = [
         #Define the AI's job description
@@ -44,12 +41,14 @@ def fragrance_recommender(userPreferences):
     ]
     
     #Convert prompt for LangChain processing
+
     lc_messages = convert_openai_messages(prompt)
 
 
     #gpt-40-mini for hybrid performance and efficiency
     response = ChatOpenAI(model='gpt-4o-mini').invoke(lc_messages) 
-    print("TEST 2")
+    print(response)
 
     #The query tells Tavily what to search for based on relevance, and the prompt tells the OpenAI model its role and how to use Tavily's response (information) to solve the query.
     return response.content.split('/')
+

@@ -68,6 +68,7 @@ def recommend(request):
             email = data.get('email') 
             userPreferences = data.get('userPreferences')
             # (Optional) Debugging logs (remove in production)
+            print(data)
             recommendations = fragrance_recommender(userPreferences)
             return JsonResponse({
                 'recommendations' : recommendations
