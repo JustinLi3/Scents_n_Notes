@@ -1,4 +1,5 @@
-$(document).ready(function() {
+$(document).ready(function() { 
+  let recommendations = []
   // multiselect customization
   $(".multiple-checkboxes").multiselect({
     includeSelectAllOption: true,
@@ -11,7 +12,10 @@ $(document).ready(function() {
       url: "/track-click/", // URL of your Django view
       type: "POST",
       headers: { "X-CSRFToken": getCookie("csrftoken") }, // Include CSRF token
-      data: JSON.stringify({email}), // Send as JSON string
+      data: JSON.stringify({
+        email: email, 
+        recommendations:recommendations
+      }), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
         alert("Email has been sent to " + email + "!")
@@ -89,7 +93,7 @@ $(document).ready(function() {
       data: JSON.stringify({userPreferences}), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
-        const recommendations = response.recommendations;   
+        recommendations = response.recommendations;   
         // Example of toggling a modal   
         $("#recommendations-list").empty();
 

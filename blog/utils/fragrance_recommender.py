@@ -22,8 +22,7 @@ def ensure_five_recommendations(recommendations):
 def fragrance_recommender(userPreferences):  
     # Define the query to retrieve data from Tavily  
     query = (
-        f"List the top 5 bestselling fragrances matching: {userPreferences}. "
-        "Please return only the names separated by '/'."
+        f"List the top 5 bestselling fragrances matching: {userPreferences}. Return the names in this format: 'Fragrance1/Fragrance2/Fragrance3/Fragrance4/Fragrance5' without any numbers or extra text."
     )
 
     # Fetch search results, return an empty string if not found, this avoids errors
@@ -55,7 +54,7 @@ def fragrance_recommender(userPreferences):
     try:
         # Invoke the OpenAI model
         lc_messages = convert_openai_messages(prompt)
-        response = ChatOpenAI(model='gpt-4o-mini-2024-07-18').invoke(lc_messages)
+        response = ChatOpenAI(model='gpt-4o-2024-08-06').invoke(lc_messages)
 
         # Process the response and ensure 5 recommendations
         recommendations = response.content.split('/')

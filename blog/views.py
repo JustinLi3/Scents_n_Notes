@@ -66,18 +66,20 @@ def track_click(request):
     if request.method == 'POST': 
         try: 
             data = json.loads(request.body) 
-            email = data.get('email') 
+            emailTo = data.get('email') 
+            recommendations = data.get('recommendations')  
+            emailBody = f"Here’s a curated list of fragrance recommendations for you.\n  1.{recommendations[0]}\n  2.{recommendations[1]}\n  3.{recommendations[2]}\n  4.{recommendations[3]}\n  5.{recommendations[4]}\n\nPlease feel free to reach out to lijustin83@gmail.com with any questions, concerns, or additional recommendations. I look forward to your feedback!"
             emailRequest = send_mail(
-                "Testing",
-                "Yo Whats good.",
+                "Scents & Notes | Your Recommendations",
+                emailBody,
                 "lijustin83@gmail.com",
-                [email],
+                [emailTo],
                 fail_silently=False,
             ) 
             if emailRequest: 
-                return JsonResponse({'success': f'Email {email} processed successfully.'}, status=200) 
+                return JsonResponse({'success': f'Email {emailTo} processed successfully.'}, status=200) 
             else: 
-                return JsonResponse({'error': f'Email {email} could not be sent. Please try again.'}, status=500) 
+                return JsonResponse({'error': f'Email {emailTo} could not be sent. Please try again.'}, status=500) 
         except Exception as e:
             #Return error details for debugging 
             return JsonResponse({'error': str(e)}, status = 400)
