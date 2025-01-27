@@ -15,7 +15,8 @@
             <ol class="modal-body" id="recommendations-list">
             </ol>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success mr-2" id="sendResults" data-dismiss="modal">Email My Results</button>
+              <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -44,9 +45,9 @@
                 <div class="col w-auto text-center mt-4">
                     <label for="fragrance-format" class="">Fragrance Format*</label>
                     <select multiple="multiple" id="fragrance-format" class="fragrance-format multiple-checkboxes form-control" >
-                        <option>Eau de Parfum (EDP)</option>
-                        <option>Eau de Toilette (EDT)</option>
-                        <option>Eau de Cologne</option>
+                        <option value="EDP">Eau de Parfum (EDP)</option>
+                        <option value="EDT">Eau de Toilette (EDT)</option>
+                        <option value="EDC">Eau de Cologne</option>
                         <option>Body Mists or Sprays</option>
                         <option>Solid Perfumes</option>
                     </select>

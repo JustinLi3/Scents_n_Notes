@@ -2,12 +2,28 @@ $(document).ready(function() {
   // multiselect customization
   $(".multiple-checkboxes").multiselect({
     includeSelectAllOption: true,
-  });
+  }); 
 
-  // parsing user preferences 
+  // parsing user preferences  
+  $("#sendResults").on("click",function(){ 
+    let email = $("#preference-email").val();
+    $.ajax({
+      url: "/track-click/", // URL of your Django view
+      type: "POST",
+      headers: { "X-CSRFToken": getCookie("csrftoken") }, // Include CSRF token
+      data: JSON.stringify({email}), // Send as JSON string
+      contentType: "application/json", // Set content type to JSON
+      success: function (response) {
+        alert("Email has been sent to " + email + "!")
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+        alert("An error occurred while sending email. Please try again.");        },
+    });
+  }); 
+  
   $("#preferences").on("submit", function (event){  
-    event.preventDefault();
-     
+    event.preventDefault();     
     let email = $("#preference-email").val();
     let fragranceType = "Fragrance Type: " + $("#fragrance-type").val() + " ";
     let fragranceFormat = "";
@@ -19,16 +35,19 @@ $(document).ready(function() {
     // Manual validation
     let valid = true;  
     // Message back to error
-    let message = ""; 
-
+    let message = "";  
+    $("#sendResults").css("display","none");
+    if (email){
+      $("#sendResults").css("display","block");
+    }  
 
     //For each option selected for each multiselector, append the value
     $("#fragrance-format").find('option:selected').each(function(index, element){ 
-      fragranceFormat += (element.value+", ");
+      fragranceFormat += (element.value+"/");
     }); 
 
     $("#scent-portfolio").find('option:selected').each(function(index, element){ 
-      scentPortfolio += (element.value+", ");
+      scentPortfolio += (element.value+"/");
     }); 
 
     //Check whether either were selected, otherwise start prompt
@@ -38,7 +57,7 @@ $(document).ready(function() {
     }
     else{  
       fragranceFormat = fragranceFormat.slice(0,-2);
-      fragranceFormat = "Fragrance Format(s): " + fragranceFormat;
+      fragranceFormat = "Fragrance Formats: " + fragranceFormat;
     } 
 
     if (!scentPortfolio){
@@ -46,8 +65,8 @@ $(document).ready(function() {
       valid = false;
     }
     else{
-      scentPortfolio = scentPortfolio.slice(0,-2);
-      scentPortfolio = "Fragrance Portfolio(s): " + scentPortfolio;
+      scentPortfolio = scentPortfolio.slice(0,-1);
+      scentPortfolio = "Fragrance Portfolios: " + scentPortfolio;
     }  
 
     if (personalityTraits){
@@ -60,18 +79,14 @@ $(document).ready(function() {
     }
     errorMessage.css("display", "none");
 
-    let userPreferences = fragranceType + "\n" + fragranceFormat + "\n" + scentPortfolio + "\n" + personalityTraits;
+    let userPreferences = fragranceType + ", " + fragranceFormat + ", " + scentPortfolio + ", " + personalityTraits + ".";
     console.log(userPreferences)
-    let formData = {
-      email: email,
-      userPreferences: userPreferences
-    };
-
+    
     $.ajax({
       url: "/recommend/", // URL of your Django view
       type: "POST",
       headers: { "X-CSRFToken": getCookie("csrftoken") }, // Include CSRF token
-      data: JSON.stringify(formData), // Send as JSON string
+      data: JSON.stringify({userPreferences}), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
         const recommendations = response.recommendations;   

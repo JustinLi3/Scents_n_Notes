@@ -1,54 +1,66 @@
-#Essentially a translator that takes your prompt and reformats for LangChain to better understand to process better
-from langchain.adapters.openai import convert_openai_messages
-#Allow us to interact with LLMS
+from langchain_community.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
 from dotenv import load_dotenv
+import os
+import logging
 
-import os 
-#load in environment variables (delete during during production)
+# Load environment variables
 load_dotenv()
 
-#Initialize Tavily client
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
+# Initialize Tavily client
 client = TavilyClient(api_key=os.environ.get('TAVILY_API_KEY')) 
 
-
+def ensure_five_recommendations(recommendations):
+    while len(recommendations) < 5:
+        recommendations.append("No additional recommendations available")
+    return recommendations[:5]
 
 def fragrance_recommender(userPreferences):  
-    # Define the query to retrieve data from Tavily 
-    query = "Given the user's preferences as follows: " + userPreferences + ", list the top 5 bestselling fragrances that match these preferences. Please return only the names of the fragrances, separated by a '/' (e.g., fragrance1/fragrance2/fragrance3/fragrance4/fragrance5), without additional text or explanations."
+    # Define the query to retrieve data from Tavily  
+    query = (
+        f"List the top 5 bestselling fragrances matching: {userPreferences}. "
+        "Please return only the names separated by '/'."
+    )
 
-    #Fetch search results, top 3 relevant sources
-    response = client.search(query, max_results= 3, search_depth="basic")['results']
-    #LangChain Prompt (Query To Process Data): 
+    # Fetch search results, return an empty string if not found, this avoids errors
+    response = client.search(query, max_results=3, search_depth="advanced", topic="general").get('results', [])
+    if not response:
+        return ["No recommendations available"]
 
+    # Log response for debugging
+    logging.debug(f"Tavily Response: {response}")
+
+    # Define the LangChain prompt
     prompt = [
-        #Define the AI's job description
         {
-            'role':'system', 
-            'content': f''' 
-            "You are an AI critical thinker research assistant." 
-            "Your purpose is to help recommend the user's bestselling fragrances based on the provided information."
-            '''
-    },
-        #Give Specific instructions for the current task based on the input data
+            'role': 'system',
+            'content': (
+                "You are a research assistant AI specialized in recommending fragrances. "
+                "Based on the provided data, generate the top 5 bestselling fragrances."
+            )
+        },
         {
-            'role': 'user', 
-            'content': f"""Information: {response}
-            \nUsing the information above, answer the following query:\n{query}. 
-            """
+            'role': 'user',
+            'content': f"Data: {response}\nQuery: {query}"
         }
     ]
-    
-    #Convert prompt for LangChain processing
 
-    lc_messages = convert_openai_messages(prompt)
+    # Log prompt for debugging
+    logging.debug(f"LangChain Prompt: {prompt}")
 
+    try:
+        # Invoke the OpenAI model
+        lc_messages = convert_openai_messages(prompt)
+        response = ChatOpenAI(model='gpt-4o-mini-2024-07-18').invoke(lc_messages)
 
-    #gpt-40-mini for hybrid performance and efficiency
-    response = ChatOpenAI(model='gpt-4o-mini').invoke(lc_messages) 
-    print(response)
-
-    #The query tells Tavily what to search for based on relevance, and the prompt tells the OpenAI model its role and how to use Tavily's response (information) to solve the query.
-    return response.content.split('/')
-
+        # Process the response and ensure 5 recommendations
+        recommendations = response.content.split('/')
+        return ensure_five_recommendations(recommendations)
+    except Exception as e:
+        # Handle errors gracefully
+        logging.error(f"Error during recommendation: {str(e)}")
+        return [f"Error occurred: {str(e)}"]

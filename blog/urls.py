@@ -15,7 +15,6 @@ urlpatterns = [
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'), 
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
-
     #Set as the homepage
     #Specify the view that we want to handle logic at that home page route   
     #Specify name for route to not collide with other routes  
@@ -25,7 +24,8 @@ urlpatterns = [
     path('find-scent/',views.find_scent, name='find-scent'), 
     path('buy-cologne/',views.buy_cologne, name='buy-cologne'), 
     path('what-works/',views.works, name='what-works'), 
-    path('recommend/', views.recommend, name="recommend" )
+    path('recommend/', views.recommend, name="recommend" ), 
+    path('track-click/', views.track_click, name="track_click")
 
 
 

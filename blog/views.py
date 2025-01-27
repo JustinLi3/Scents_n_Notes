@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
 from django.contrib.auth.models import User   
+from django.core.mail import send_mail
 from django.http import JsonResponse 
 #Import for search functionality
 from django.db.models import Q 
@@ -15,7 +16,7 @@ from django.views.generic import (
 )
 from .models import Post  
 from .utils.fragrance_recommender import fragrance_recommender 
-import os
+
 
 #Use as dummy data, as if you retrieved this data from a database
 # posts = [
@@ -61,11 +62,33 @@ def buy_cologne(request):
 def works(request): 
     return render(request, 'blog/works.html', {'title':'What Works?'})  
 
-def recommend(request):
-    if request.method == 'POST':
-        try:
+def track_click(request): 
+    if request.method == 'POST': 
+        try: 
             data = json.loads(request.body) 
             email = data.get('email') 
+            emailRequest = send_mail(
+                "Testing",
+                "Yo Whats good.",
+                "lijustin83@gmail.com",
+                [email],
+                fail_silently=False,
+            ) 
+            if emailRequest: 
+                return JsonResponse({'success': f'Email {email} processed successfully.'}, status=200) 
+            else: 
+                return JsonResponse({'error': f'Email {email} could not be sent. Please try again.'}, status=500) 
+        except Exception as e:
+            #Return error details for debugging 
+            return JsonResponse({'error': str(e)}, status = 400)
+    # Return error response for invalid request methods
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def recommend(request):
+    if request.method == 'POST':
+        try: 
+            data = json.loads(request.body) 
             userPreferences = data.get('userPreferences')
             # (Optional) Debugging logs (remove in production)
             print(data)
