@@ -13,15 +13,17 @@ class Profile(models.Model):
 
     #grab image saved and then resize using pillow 
     #*args and **kwargs allow Django to send whatever it needs, and super().save(*args, **kwargs) makes sure the object is saved before your custom code runs
-    def save(self, *args, **kwargs): 
-        super(Profile, self).save( *args, **kwargs) 
-        #Open the image of the current instance and resize 
-        img = Image.open(self.image.path) 
+    
+    # Photo resizing on submit, however Pillow does not work for non-local images
+    # def save(self, *args, **kwargs): 
+    #     super(Profile, self).save( *args, **kwargs) 
+    #     #Open the image of the current instance and resize 
+    #     img = Image.open(self.image.path) 
 
-        if img.height>300 or img.width > 300: 
-            output_size = (300,300) 
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+    #     if img.height>300 or img.width > 300: 
+    #         output_size = (300,300) 
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
 
 #Make sure that whenever you change something in models (schema for database), you must make migrations 
 #python manage.py makemigrations (generate migration file for changes) 

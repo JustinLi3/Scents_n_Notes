@@ -7,12 +7,13 @@ body {
 button, .modal-content{
   background:#F5EFE7;
   border: 1px solid #213555 !important ;
-
+}
+.sidebar-li{
+  padding: 25px !important;
 }
 
 ul li {
   position: relative; /* Makes the list item the parent for the link's positioning */ 
-  padding: 25px !important;
 }
 
 ul li a {
