@@ -7,6 +7,10 @@ $(document).ready(function() {
 
   // parsing user preferences  
   $("#sendResults").on("click",function(){ 
+    // Show spinner on email click 
+    $("#spinner").show();
+    $("#overlay").show();
+
     let email = $("#preference-email").val();
     $.ajax({
       url: "/track-click/", // URL of your Django view
@@ -18,9 +22,17 @@ $(document).ready(function() {
       }), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
+        // Hide spinner when the request completes successfully
+        $("#spinner").hide();
+        $("#overlay").hide();
+
         alert("Email has been sent to " + email + "!")
       },
       error: function (xhr, status, error) {
+        // Hide spinner in case of error
+        $("#spinner").hide();
+        $("#overlay").hide();
+
         console.error("Error:", error);
         alert("An error occurred while sending email. Please try again.");        },
     });
@@ -85,6 +97,11 @@ $(document).ready(function() {
 
     let userPreferences = fragranceType + ", " + fragranceFormat + ", " + scentPortfolio + ", " + personalityTraits + ".";
     console.log(userPreferences)
+
+    // SHOW the spinner while waiting for recommendations
+    $("#spinner").show();
+    $("#overlay").show();
+
     
     $.ajax({
       url: "/recommend/", // URL of your Django view
@@ -93,6 +110,10 @@ $(document).ready(function() {
       data: JSON.stringify({userPreferences}), // Send as JSON string
       contentType: "application/json", // Set content type to JSON
       success: function (response) {
+        // Hide spinner once the recommendations are received
+        $("#spinner").hide();
+        $("#overlay").hide();
+
         recommendations = response.recommendations;   
         // Example of toggling a modal   
         $("#recommendations-list").empty();
@@ -106,6 +127,9 @@ $(document).ready(function() {
         $('#preference-modal').modal('show'); 
       },
       error: function (xhr, status, error) {
+        // Hide spinner in case of error
+        $("#spinner").hide();
+        $("#overlay").hide();
         console.error("Error:", error);
         errorMessage.html("An error occurred while submitting your preferences. Please try again.").css("display", "block");
       },

@@ -12,11 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os 
-from dotenv import load_dotenv
-
-load_dotenv()
-
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,6 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms', 
     'crispy_bootstrap4',
     'tailwind',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -151,6 +147,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True 
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER') 
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') 
+
+TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY") 
+
 
 
 # Default primary key field type

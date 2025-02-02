@@ -1,18 +1,15 @@
 from langchain_community.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
-from dotenv import load_dotenv
-import os
-import logging
+import logging 
+from django.conf import settings
 
-# Load environment variables
-load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 # Initialize Tavily client
-client = TavilyClient(api_key=os.environ.get('TAVILY_API_KEY')) 
+client = TavilyClient(api_key=settings.TAVILY_API_KEY) 
 
 def ensure_five_recommendations(recommendations):
     while len(recommendations) < 5:
@@ -54,7 +51,7 @@ def fragrance_recommender(userPreferences):
     try:
         # Invoke the OpenAI model
         lc_messages = convert_openai_messages(prompt)
-        response = ChatOpenAI(model='gpt-4o-2024-08-06').invoke(lc_messages)
+        response = ChatOpenAI(model='gpt-4o-mini').invoke(lc_messages)
 
         # Process the response and ensure 5 recommendations
         recommendations = response.content.split('/')

@@ -15,6 +15,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post  
+from django.conf import settings
 from .utils.fragrance_recommender import fragrance_recommender 
 
 
@@ -72,7 +73,7 @@ def track_click(request):
             emailRequest = send_mail(
                 "Scents & Notes | Your Recommendations",
                 emailBody,
-                "lijustin83@gmail.com",
+                settings.EMAIL_HOST_USER,
                 [emailTo],
                 fail_silently=False,
             ) 
@@ -103,9 +104,6 @@ def recommend(request):
             return JsonResponse({'error': str(e)}, status = 400)
     # Return error response for invalid request methods
     return JsonResponse({'error': 'Invalid request method'}, status=405)
-        
-
-            
 
 #inherit from that list view
 class PostListView(ListView):  
