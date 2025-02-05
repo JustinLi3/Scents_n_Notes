@@ -2,7 +2,8 @@ from django.db import models
 #For profile
 from django.contrib.auth.models import User 
 #Import pillow
-from PIL import Image 
+from PIL import Image  
+import os
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) #one to one relationship with a profile and user, cascade to delete user and profile
@@ -10,6 +11,17 @@ class Profile(models.Model):
     def __str__(self): 
         return f'{self.user.username} Profile' 
         #changes take effect after reopening  
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # Resize the image if needed
+        img_path = self.image.path
+        if os.path.exists(img_path):
+            with Image.open(img_path) as img:
+                if img.height > 300 or img.width > 300:
+                    output_size = (300, 300)
+                    img.thumbnail(output_size)
+                    img.save(img_path)
 
     #grab image saved and then resize using pillow 
     #*args and **kwargs allow Django to send whatever it needs, and super().save(*args, **kwargs) makes sure the object is saved before your custom code runs
