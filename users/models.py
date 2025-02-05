@@ -3,25 +3,45 @@ from django.db import models
 from django.contrib.auth.models import User 
 #Import pillow
 from PIL import Image  
-import os
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
+
+
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE) #one to one relationship with a profile and user, cascade to delete user and profile
-    image = models.ImageField(default = 'default.jpg', upload_to='profile_pics') #default image is default.jpg, if user puts in picture, it is sent to that directory
-    def __str__(self): 
-        return f'{self.user.username} Profile' 
-        #changes take effect after reopening  
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # One-to-one relationship
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')  # Image upload location
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
     def save(self, *args, **kwargs):
+        # Save the instance first
         super().save(*args, **kwargs)
 
-        # Resize the image if needed
-        img_path = self.image.path
-        if os.path.exists(img_path):
-            with Image.open(img_path) as img:
-                if img.height > 300 or img.width > 300:
-                    output_size = (300, 300)
-                    img.thumbnail(output_size)
-                    img.save(img_path)
+        # Resize the image (for locally uploaded images)
+        if self.image:
+            img = Image.open(self.image)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+
+                # Save the resized image to memory instead of local storage
+                buffer = BytesIO()
+                img.save(buffer, format=img.format)
+                buffer.seek(0)
+
+                # Replace the old image with the resized image
+                self.image = InMemoryUploadedFile(
+                    buffer,
+                    'ImageField',
+                    self.image.name,
+                    img.format.lower(),
+                    sys.getsizeof(buffer),
+                    None
+                )
+                super().save(*args, **kwargs)  # Save the instance again
 
     #grab image saved and then resize using pillow 
     #*args and **kwargs allow Django to send whatever it needs, and super().save(*args, **kwargs) makes sure the object is saved before your custom code runs

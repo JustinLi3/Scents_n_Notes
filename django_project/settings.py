@@ -124,14 +124,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/' 
 #DIRECTORY PATH (where the files physically exist (server-side))
 MEDIA_ROOT = str(BASE_DIR / 'media')
-#URL PATH (where the files are available in url (client-side))
-MEDIA_URL = '/media/' 
 #Template pack for forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4' 
 
@@ -163,8 +158,30 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
 # Use S3 for media storage
-DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "location": "media/",  # Place all media files in the "media/" folder of your S3 bucket
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "location": "static/",  # Place all static files in the "static/" folder of your S3 bucket
+        },
+    },
+}
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/"
+MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/media/"
+
+STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 
 
 
