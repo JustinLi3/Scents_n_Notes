@@ -1,9 +1,11 @@
 $(document).ready(function() { 
-  let recommendations = []
-  // multiselect customization
-  $(".multiple-checkboxes").multiselect({
-    includeSelectAllOption: true,
-  }); 
+  // Initialize Select2 for all relevant elements
+  $('.select2').select2({
+    placeholder: "Select options",
+    allowClear: true
+  });
+
+  let recommendations = [];
 
   // parsing user preferences  
   $("#sendResults").on("click",function(){ 
@@ -34,7 +36,7 @@ $(document).ready(function() {
         $("#overlay").hide();
 
         console.error("Error:", error);
-        alert("An error occurred while sending email. Please try again.");        },
+        alert("An error occurred while sending email. Please try again.");  },
     });
   }); 
   
@@ -42,8 +44,6 @@ $(document).ready(function() {
     event.preventDefault();     
     let email = $("#preference-email").val();
     let fragranceType = "Fragrance Type: " + $("#fragrance-type").val() + " ";
-    let fragranceFormat = "";
-    let scentPortfolio = "";  
     let personalityTraits = $("#personality-traits").val(); 
 
     // Error message to return to user 
@@ -57,14 +57,14 @@ $(document).ready(function() {
       $("#sendResults").css("display","block");
     }  
 
-    //For each option selected for each multiselector, append the value
-    $("#fragrance-format").find('option:selected').each(function(index, element){ 
-      fragranceFormat += (element.value+"/");
-    }); 
+   // For each option selected for each multiselector, get the selected values directly from Select2
+    let fragranceFormat = $("#fragrance-format").select2('data')  // Get selected data from Select2
+      .map(item => item.text)  // Extract the text of each selected item
+      .join('/');  // Join selected values with '/'
 
-    $("#scent-portfolio").find('option:selected').each(function(index, element){ 
-      scentPortfolio += (element.value+"/");
-    }); 
+    let scentPortfolio = $("#scent-portfolio").select2('data')
+      .map(item => item.text)
+      .join('/');
 
     //Check whether either were selected, otherwise start prompt
     if (!fragranceFormat){
